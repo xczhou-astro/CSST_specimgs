@@ -1,0 +1,14 @@
+SELECT
+	object_id
+    ,ra
+    ,dec
+	  ,i_cmodel_flux
+	  ,i_cmodel_fluxerr
+    ,i_cmodel_mag
+FROM
+    pdr3_wide.forced
+WHERE
+    -- Selected range in wide Spring field.
+    boxSearch(coord, 125.95136606146907, 228.10415279199657, -3.691415823229307, 6.5230912492901325)
+    AND isprimary
+    AND i_cmodel_mag < 24
