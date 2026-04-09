@@ -8,7 +8,7 @@ This directory includes scripts to generate ideal galaxy images and SEDs for sim
 
 The ideal images are obtained from HSC-SSP PDR3, and the SEDs are from DESI DR1.
 
-`query.txt`: the query command to retrieve sources from [CAS Search](https://hsc-release.mtk.nao.ac.jp/doc/index.php/data-access__pdr3/) of HSC-SSP PDR3.  
+`query.txt`: query command to retrieve sources from [CAS Search](https://hsc-release.mtk.nao.ac.jp/doc/index.php/data-access__pdr3/) of HSC-SSP PDR3.  
 `downloadCutout.py`: official image cutout python script downloaded from [here](https://hsc-gitlab.mtk.nao.ac.jp/ssp-software/data-access-tools/-/tree/master/pdr3/downloadCutout/).  
 `downloadPsf.py`: official psf picker python script downloaded fron [here](https://hsc-gitlab.mtk.nao.ac.jp/ssp-software/data-access-tools/-/tree/master/pdr3/downloadPsf/).  
 `get_cutouts.py`: image cutout script from sky patches downloaded from DAS Search.  
@@ -20,6 +20,27 @@ The ideal images are obtained from HSC-SSP PDR3, and the SEDs are from DESI DR1.
 `add_coeff.py`: add 'coeff' column for the selected source catalog from DESI DR1 catalog.  
 
 Other neccessary files:  
-DESI redrock templates [`rrtemplate-GALAXY-None-v2.6.fits`](https://github.com/desihub/redrock-templates);  
+DESI redrock templates [`rrtemplate-GALAXY-None-v2.6.fits`](https://github.com/desihub/redrock-templates/blob/main/rrtemplate-GALAXY-None-v2.6.fits);  
 DESI DR1 catalog [`zall-pix-iron.fits`](https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/zcatalog/v1/zall-pix-iron.fits) (20GB).  
+
+## sls
+This directory includes scripts to generate mock slitless spectra (2D images and 1D spectra).  
+
+CSST slitless simulation software: [`sls_1d_spec`](https://csst-tb.bao.ac.cn/code/zhangxin/sls_1d_spec).
+
+`sls_generation.py`: generation pipeline for mock slitless spectra.  
+`save_lmdb.py`: save the 2D spectral images in lmdb format, facilitate fast data loading by PyTorch.  
+`add_properties`: add several fluxes from DESI DR1 catalog.  
+
+## train
+This directory includes scripts to train the deterministic pre-training and Bayesian neural networks for redshift estimations
+
+`datasets.py`: data loader for the 2D spectral images.  
+`model.py`: neural network architectures.  
+`train.py`: training and testing routinue.  
+
+Run training by:
+```Python
+CUDA_VISIBLE_DEVICES=6,7 torchrun --nproc_per_node=2 train.py
+```
 
