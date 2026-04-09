@@ -1,49 +1,53 @@
 # CSST_specimgs
-Spectroscopic redshifts estimated from CSST slitless spectral images  
 
-In this work, we employ Bayesian convolutional neural network (BCNN) to estimate redshifts from mock 2D spectral images for CSST slitless spectroscopic survey. 
+Spectroscopic redshift estimation from CSST slitless spectral images.
+
+This project uses a Bayesian convolutional neural network (BCNN) to estimate redshifts from mock 2D spectral images for the CSST slitless spectroscopic survey.
 
 ## datasets
-This directory includes scripts to generate ideal galaxy images and SEDs for simulation of slitless spectra.  
 
-The ideal images are obtained from HSC-SSP PDR3, and the SEDs are from DESI DR1.
+This directory contains scripts for generating ideal galaxy images and SEDs used in slitless spectroscopy simulations.
 
-`query.txt`: query command to retrieve sources from [CAS Search](https://hsc-release.mtk.nao.ac.jp/doc/index.php/data-access__pdr3/) of HSC-SSP PDR3.  
-`downloadCutout.py`: official image cutout python script downloaded from [here](https://hsc-gitlab.mtk.nao.ac.jp/ssp-software/data-access-tools/-/tree/master/pdr3/downloadCutout/).  
-`downloadPsf.py`: official psf picker python script downloaded fron [here](https://hsc-gitlab.mtk.nao.ac.jp/ssp-software/data-access-tools/-/tree/master/pdr3/downloadPsf/).  
-`get_cutouts.py`: image cutout script from sky patches downloaded from DAS Search.  
-`download_missing_cutouts.py`: get cutouts that are missed by `get_cutouts.py` (edge sources). Call `downloadCutout.py`.  
-`psf_downloader.py`: call `downloadPsf.py`.  
-`match_with_desi.py`: match sources in HSC and DESI.  
-`patch_infos.py`: get the metadata from sky patches downloaded from DAS Search.  
-`find_deconvolve_cutouts.py`: mask out the central source for cutouts and perform deconvolution.  
-`add_coeff.py`: add 'coeff' column for the selected source catalog from DESI DR1 catalog.  
+The ideal images are obtained from HSC-SSP PDR3, and the SEDs are taken from DESI DR1.
 
-Other neccessary files:  
-DESI redrock templates [`rrtemplate-GALAXY-None-v2.6.fits`](https://github.com/desihub/redrock-templates/blob/main/rrtemplate-GALAXY-None-v2.6.fits);  
-DESI DR1 catalog [`zall-pix-iron.fits`](https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/zcatalog/v1/zall-pix-iron.fits) (20GB).  
+`query.txt`: Query command used to retrieve sources from [HSC-SSP PDR3 CAS Search](https://hsc-release.mtk.nao.ac.jp/doc/index.php/data-access__pdr3/).  
+`downloadCutout.py`: Official Python script for image cutout downloads, obtained from [here](https://hsc-gitlab.mtk.nao.ac.jp/ssp-software/data-access-tools/-/tree/master/pdr3/downloadCutout/).  
+`downloadPsf.py`: Official Python script for PSF downloads, obtained from [here](https://hsc-gitlab.mtk.nao.ac.jp/ssp-software/data-access-tools/-/tree/master/pdr3/downloadPsf/).  
+`get_cutouts.py`: Gets image cutouts from sky patches downloaded via DAS Search of HSC.  
+`download_missing_cutouts.py`: Retrieves cutouts missed by `get_cutouts.py` (typically edge sources) by calling `downloadCutout.py`.  
+`psf_downloader.py`: Wrapper script that calls `downloadPsf.py`.  
+`match_with_desi.py`: Matches sources between HSC and DESI catalogs.  
+`patch_infos.py`: Extracts metadata from sky patches downloaded via DAS Search of HSC.  
+`find_deconvolve_cutouts.py`: Masks out central sources in cutouts and performs deconvolution.  
+`add_coeff.py`: Adds a `coeff` column to the selected source catalog from DESI DR1.  
+
+Other necessary files:  
+DESI redrock template [`rrtemplate-GALAXY-None-v2.6.fits`](https://github.com/desihub/redrock-templates/blob/main/rrtemplate-GALAXY-None-v2.6.fits);  
+DESI DR1 catalog [`zall-pix-iron.fits`](https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/zcatalog/v1/zall-pix-iron.fits) (~20 GB).  
 
 ## sls
-This directory includes scripts to generate mock slitless spectra (2D images and 1D spectra).  
+
+This directory contains scripts for generating mock slitless spectra (2D images and 1D spectra).
 
 CSST slitless simulation software: [`sls_1d_spec`](https://csst-tb.bao.ac.cn/code/zhangxin/sls_1d_spec).
 
-`sls_generation.py`: generation pipeline for mock slitless spectra.  
-`save_lmdb.py`: save the 2D spectral images in lmdb format, facilitate fast data loading by PyTorch.  
-`add_properties`: add several fluxes from DESI DR1 catalog.  
+`sls_generation.py`: End-to-end generation pipeline for mock slitless spectra.  
+`save_lmdb.py`: Stores 2D spectral images in LMDB format to support fast PyTorch data loading.  
+`add_properties.py`: Adds more flux-related properties from the DESI DR1 catalog.  
 
 ## train
-This directory includes scripts to train the deterministic pre-training and Bayesian neural networks for redshift estimations
 
-`datasets.py`: data loader for the 2D spectral images.  
-`model.py`: neural network architectures.  
-`train.py`: training and testing routinue.  
+This directory contains scripts for deterministic pretraining and Bayesian neural network training for redshift estimation.
 
-Run training by:
-```Python
+`datasets.py`: Data loader for 2D spectral images.  
+`model.py`: Neural network architectures.  
+`train.py`: Training and evaluation routine.  
+
+Run training with:
+```python
 CUDA_VISIBLE_DEVICES=6,7 torchrun --nproc_per_node=2 train.py
 ```
-or 
-```Python
+or:
+```python
 CUDA_VISIBLE_DEVICES=7 torchrun --nproc_per_node=1 train.py
 ```
