@@ -17,3 +17,9 @@ The ideal images are obtained from HSC-SSP PDR3, and the SEDs are from DESI DR1.
 `match_with_desi.py`: match sources in HSC and DESI.  
 `patch_infos.py`: get the metadata from sky patches downloaded from DAS Search.  
 `find_deconvolve_cutouts.py`: mask out the central source for cutouts and perform deconvolution.  
+`add_coeff.py`: add 'coeff' column for the selected source catalog from DESI DR1 catalog.  
+
+Other neccessary files:  
+DESI redrock templates [`rrtemplate-GALAXY-None-v2.6.fits`](https://github.com/desihub/redrock-templates);  
+DESI DR1 catalog [`zall-pix-iron.fits`](https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/zcatalog/v1/zall-pix-iron.fits) (20GB).  
+
