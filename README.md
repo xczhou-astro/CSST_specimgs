@@ -43,4 +43,7 @@ Run training by:
 ```Python
 CUDA_VISIBLE_DEVICES=6,7 torchrun --nproc_per_node=2 train.py
 ```
-
+or 
+```Python
+CUDA_VISIBLE_DEVICES=7 torchrun --nproc_per_node=1 train.py
+```
