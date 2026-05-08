@@ -4,6 +4,8 @@ Spectroscopic redshift estimation from CSST slitless spectral images.
 
 This project uses a Bayesian convolutional neural network (BCNN) to estimate redshifts from mock 2D spectral images for the CSST slitless spectroscopic survey.
 
+The relevant results are saved in [Google Drive](https://drive.google.com/drive/folders/1H79h9BJ6k4x9HkjZhErf-rljgnSqGC8u?usp=drive_link).
+
 ## datasets
 
 This directory contains scripts for generating ideal galaxy images and SEDs used in slitless spectroscopy simulations.
